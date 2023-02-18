@@ -31,6 +31,7 @@ static POSSIBLE_TITLES: &[&str] = &[
 ];
 shadow!(build);
 // Tauri has a way to return the package.json version, but it's not a constant...
+// TODO: shadow_rs doesn't return the last related tag to the commit.
 const VERSION: &str = if build::TAG.is_empty() {
 	build::SHORT_COMMIT
 } else {

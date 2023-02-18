@@ -6,6 +6,8 @@ const commitHash = execSync('git rev-parse --verify --short HEAD').toString().tr
 const versionTag = execSync('git --no-pager tag --points-at HEAD').toString().trim();
 // If not empty then it's not clean
 const gitClean = execSync('git status --porcelain').toString() ? false : true;
+const lastVersionTag = execSync('git describe --abbrev=0 HEAD').toString().trim();
+const currentBranch = execSync('git branch --show-current').toString().trim();
 
 console.log(`version is ${versionTag || commitHash}${gitClean ? '' : '-dirty'}`);
 
@@ -30,6 +32,8 @@ export default defineConfig({
   define: {
     __COMMIT_HASH__: JSON.stringify(commitHash),
     __VERSION_TAG__: JSON.stringify(versionTag),
+    __LAST_VERSION_TAG__: JSON.stringify(lastVersionTag),
+    __CURRENT_BRANCH__: JSON.stringify(currentBranch),
     __GIT_CLEAN__: gitClean,
   },
   plugins: [react(), i18nHotReload()],
