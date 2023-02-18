@@ -7,9 +7,12 @@ const versionTag = execSync('git --no-pager tag --points-at HEAD').toString().tr
 // If not empty then it's not clean
 const gitClean = execSync('git status --porcelain').toString() ? false : true;
 const lastVersionTag = execSync('git describe --abbrev=0 HEAD').toString().trim();
-const currentBranch = execSync('git branch --show-current').toString().trim();
 
-console.log(`version is ${`${lastVersionTag}/` || ''}${`${currentBranch}/` || ''}${versionTag || commitHash}${gitClean ? '' : '-dirty'}`);
+console.log(
+  `version is ${`${lastVersionTag}/` || ''}${versionTag || commitHash}${
+    gitClean ? '' : '-dirty'
+  }`
+);
 
 // Detect fluent file changes
 export function i18nHotReload(): PluginOption {
@@ -33,7 +36,6 @@ export default defineConfig({
     __COMMIT_HASH__: JSON.stringify(commitHash),
     __VERSION_TAG__: JSON.stringify(versionTag),
     __LAST_VERSION_TAG__: JSON.stringify(lastVersionTag),
-    __CURRENT_BRANCH__: JSON.stringify(currentBranch),
     __GIT_CLEAN__: gitClean,
   },
   plugins: [react(), i18nHotReload()],

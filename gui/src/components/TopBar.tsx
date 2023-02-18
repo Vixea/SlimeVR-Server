@@ -56,9 +56,8 @@ export function TopBar({
           </div>
           <div className="flex justify-around flex-col text-standard-bold text-status-success bg-status-success bg-opacity-20 rounded-lg px-3 select-text">
             {(__VERSION_TAG__ ||
-              (`${__LAST_VERSION_TAG__}/` || '') +
-                (`${__CURRENT_BRANCH__}/` || '') +
-                __COMMIT_HASH__) + (__GIT_CLEAN__ ? '' : '-dirty')}
+              (`${__LAST_VERSION_TAG__}/` || '') + __COMMIT_HASH__) +
+              (__GIT_CLEAN__ ? '' : '-dirty')}
           </div>
           {doesMatchSettings && (
             <div className="flex justify-around flex-col text-standard-bold text-status-special bg-status-special bg-opacity-20 rounded-lg px-3 select-text">
