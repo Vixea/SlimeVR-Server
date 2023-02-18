@@ -9,7 +9,7 @@ const gitClean = execSync('git status --porcelain').toString() ? false : true;
 const lastVersionTag = execSync('git describe --abbrev=0 HEAD').toString().trim();
 const currentBranch = execSync('git branch --show-current').toString().trim();
 
-console.log(`version is ${versionTag || commitHash}${gitClean ? '' : '-dirty'}`);
+console.log(`version is ${`${lastVersionTag}/` || ''}${`${currentBranch}/` || ''}${versionTag || commitHash}${gitClean ? '' : '-dirty'}`);
 
 // Detect fluent file changes
 export function i18nHotReload(): PluginOption {
