@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { RpcMessage, SkeletonResetAllRequestT } from 'solarxr-protocol';
+import { RpcMessage, SkeletonConfigResponseT, SkeletonResetAllRequestT } from 'solarxr-protocol';
 import { useOnboarding } from '../../../../hooks/onboarding';
 import { useWebsocketAPI } from '../../../../hooks/websocket-api';
 import { ArrowLink } from '../../../commons/ArrowLink';
@@ -11,11 +11,12 @@ import { BodyProportions } from './BodyProportions';
 import { useLocalization } from '@fluent/react';
 import { useEffect } from 'react';
 import { useBodyProportions } from '../../../../hooks/body-proportions';
+import { writeClipboard } from '../../../utils/a11y';
 
 export function ManualProportionsPage() {
   const { l10n } = useLocalization();
   const { applyProgress, skipSetup, state } = useOnboarding();
-  const { sendRPCPacket } = useWebsocketAPI();
+  const { useRPCPacket, sendRPCPacket } = useWebsocketAPI();
   const { onPageOpened } = useBodyProportions();
 
   applyProgress(0.9);
@@ -30,6 +31,15 @@ export function ManualProportionsPage() {
       RpcMessage.SkeletonResetAllRequest,
       new SkeletonResetAllRequestT()
     );
+  };
+
+  const copyOffsets = () => {
+    useRPCPacket(
+      RpcMessage.SkeletonConfigResponse,
+      (data: SkeletonConfigResponseT) => {
+        writeClipboard(data.skeletonParts);
+      }
+    )
   };
 
   useEffect(() => {
@@ -79,6 +89,9 @@ export function ManualProportionsPage() {
             )}
             <Button variant="secondary" onClick={resetAll}>
               {l10n.getString('reset-reset_all')}
+            </Button>
+            <Button variant="secondary" onClick={resetAll}>
+              {l10n.getString('onboarding-manual_proportions-copy')}
             </Button>
           </div>
           <div className="flex gap-3">

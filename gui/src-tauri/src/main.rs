@@ -13,7 +13,6 @@ use const_format::concatcp;
 use rand::{seq::SliceRandom, thread_rng};
 use shadow_rs::shadow;
 use tauri::api::process::Command;
-use tauri::Manager;
 use tempfile::Builder;
 
 #[cfg(windows)]
@@ -201,6 +200,7 @@ fn main() {
 
 	let builder = tauri::Builder::default()
 		.plugin(tauri_plugin_window_state::Builder::default().build())
+		.enable_clipboard_access()
 		.setup(|app| {
 			if let Some(mut recv) = stdout_recv {
 				let app_handle = app.app_handle();
