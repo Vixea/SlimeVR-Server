@@ -202,9 +202,8 @@ fn main() {
 	let builder = tauri::Builder::default()
 		.plugin(tauri_plugin_window_state::Builder::default().build())
 		.setup(|app| {
-			let app_handle = app.app_handle();
-
 			if let Some(mut recv) = stdout_recv {
+				let app_handle = app.app_handle();
 				tauri::async_runtime::spawn(async move {
 					use tauri::api::process::CommandEvent;
 
