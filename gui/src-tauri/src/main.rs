@@ -12,6 +12,7 @@ use clap::Parser;
 use const_format::concatcp;
 use rand::{seq::SliceRandom, thread_rng};
 use shadow_rs::shadow;
+use tauri::Manager;
 use tauri::api::process::Command;
 use tempfile::Builder;
 
@@ -200,10 +201,10 @@ fn main() {
 
 	let builder = tauri::Builder::default()
 		.plugin(tauri_plugin_window_state::Builder::default().build())
-		.enable_clipboard_access()
 		.setup(|app| {
+			let app_handle = app.app_handle();
+
 			if let Some(mut recv) = stdout_recv {
-				let app_handle = app.app_handle();
 				tauri::async_runtime::spawn(async move {
 					use tauri::api::process::CommandEvent;
 
