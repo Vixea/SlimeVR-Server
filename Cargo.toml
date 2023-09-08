@@ -17,5 +17,5 @@ lto = "thin"
 strip = "debuginfo" # Only affects Unix binaries with DWARF
 
 [patch.crates-io]
-tauri = { git = "https://github.com/imurx/tauri", branch = "ipc-backport" }
-tauri-runtime = { git = "https://github.com/imurx/tauri", branch = "ipc-backport" }
+tauri = { git = "https://github.com/Vixea/tauri", branch = "ipc-backport-no-build" }
+tauri-runtime = { git = "https://github.com/Vixea/tauri", branch = "ipc-backport-no-build" }
